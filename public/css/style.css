@@ -1,0 +1,105 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.top-banner {
+	position: relative;
+	height: 100px;
+	overflow: hidden;
+	background-color: #083b72;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=$direction);
+	background: -webkit-linear-gradient(left, #083b72 0%, #18a5d4 100%);
+	background: -moz-linear-gradient(left, #083b72 0%, #18a5d4 100%);
+	background: -o-linear-gradient(left, #083b72 0%, #18a5d4 100%);
+	background: linear-gradient(to right, #083b72 0%, #18a5d4 100%); 
+}
+.title {
+	color: #A3ABB5;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin: 0;
+}
+.description {
+	margin: 0;
+	color: #293846;
+	font-size: 28px;
+	letter-spacing: 0.5px;
+}
+#closer-div {
+	margin-right: 15px;
+	padding: 0 15px;
+	height: calc( 100vh - 200px );
+    min-height: 400px;
+    background: #293846;
+    text-align: center;
+}
+#crown {
+	height: 40px;
+	position: absolute;
+	left: 11px;
+	top: 11px;
+	-ms-transform: rotate(-25deg);
+	-webkit-transform: rotate(-25deg);
+	transform: rotate(-25deg);
+	opacity: 0.95;
+}
+#deal-owner-img {
+	max-width: 225px;
+}
+#money-gif {
+    display: block;
+	max-width: 500px;
+	width: 500px;
+	margin: 50px auto 0;
+}
+#song-album-img {
+	width: 125px;
+}
+#song-name, #song-artist {
+	font-size: 18px;
+}
+
+/*HELPERS*/
+.text-align-center {
+	text-align: center;
+}
+.white {
+	color: white;
+}
+.uppercase {
+	text-transform: uppercase;
+}
+.letter-spacing-1 {
+	letter-spacing: 1px;
+}
+.font-size-16 {
+	font-size: 16px;
+}
+.font-weight-300 {
+	font-weight: 300;
+}
+.m-t-0 {
+	margin-top: 0px;
+}
+.m-t-1 {
+	margin-top: 1em;
+}
+.m-t-2 {
+	margin-top: 2em;
+}
+.m-t-3 {
+	margin-top: 3em;
+}
+.m-y-2 {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.p-0 {
+	padding: 0;
+}
+hr {
+	border-top: 1px solid #caced2;
+}
+.dark-blue {
+	color: #293846;
+}

@@ -1,0 +1,32 @@
+{
+    "user_to_yt_video": {
+        "user1_identifier": [
+            {
+                "vid": "mKzLoZFz8PE",
+                "start_time_s": 67
+            }
+        ],
+        "user2_identifier": [
+            {
+                "vid": "p7CaiWxKYBo",
+                "start_time_s": 75
+            }
+        ]
+    },
+	"default_spotify_song_ids": [
+		"0lYBSQXN6rCTvUZvg9S0lU",
+		"4Ce37cRWvM1vIGGynKcs22",
+		"6bLopGnirdrilrpdVB6Um1",
+		"2rizacJSyD9S1IQUxUxnsK",
+		"3oQomOPRNQ5NVFUmLJHbAV",
+		"2HHtWyy5CgaQbC7XSoOb0e"
+	],
+
+	"user_to_spotify_song_ids": {
+		"user1_identifier": [ "2rizacJSyD9S1IQUxUxnsK" ]
+	},
+
+	"valid_sender_from_address": [
+		"someone_important@domain.com"
+	]
+}

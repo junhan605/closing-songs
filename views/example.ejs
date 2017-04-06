@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= title %></title>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/style.css">
+	</head>
+	<body>
+		<div class="container-fluid top-banner text-align-center">
+			<img src="https://datanyze.com/i/logo-header.png" class="m-t-1" />
+			<h4 class="white uppercase m-t-0 font-size-16 letter-spacing-1 font-weight-300"><%= title %></h4>
+		</div>
+		<div class="container">
+			<div id="last-deal-container" class="row m-t-3">
+				<div class="row">
+					<div class="col-md-12">
+						<img src="" id="money-gif" class="hide" />
+						<div id="yt-vid" class="text-align-center"></div>
+						<div id="now-playing" class="col-sm-12 hide">
+							<p class="title">Now Playing:</p>
+							<div class="media">
+								<div class="media-left">
+									<img id="song-album-img" class="media-object img-rounded" src="">
+								</div>
+								<div class="media-body media-middle">
+									<span id="song-name"></span>
+									<br>
+									<span id="song-artist" class="text-muted"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="/js/socket.io-1.4.5.min.js"></script>
+	<script type="text/javascript">
+		var s = document.createElement( 'script' );
+		s.src = 'https://www.youtube.com/iframe_api';
+		var fs = document.getElementsByTagName( 'script' )[ 0 ];
+		fs.parentNode.insertBefore( s, fs );
+
+		var player;
+		var audio;
+		var notification_socket = io.connect( 'wss://<%= push_uri %>/sale', { 'path': '/ws' } );
+		var money_gifs = <%- JSON.stringify( gifs ) %>;
+
+		notification_socket.on( 'connect', function() {
+			console.log( 'connected' );
+		});
+
+		notification_socket.on( 'new', function( data ) {
+			if( audio ) {
+				audio.pause();
+				$( '#now-playing' ).addClass( 'hide' );
+			}
+			clean_last_deal();
+			if( data.song ) {
+				play_song( data.song );
+			}
+			else if( data.video ) {
+				play_video( data.video );
+			}
+		});
+
+		function play_song( song_obj ) {
+			$( '#now-playing #song-album-img' ).attr( 'src', song_obj.album_art );
+			$( '#now-playing #song-name' ).text( song_obj.name );
+			$( '#now-playing #song-artist' ).text( song_obj.artist_name );
+			audio = new Audio( song_obj.preview_url );
+			audio.play();
+			$( '#now-playing' ).removeClass( 'hide' );
+			audio.onended = function() {
+				$( '#now-playing' ).addClass( 'hide' );
+				$( "#money-gif" ).removeClass( 'hide' );
+				$( "#money-gif" ).attr( 'src', '/images/money-gifs/' + money_gifs[ Math.floor( Math.random() * money_gifs.length ) ] );
+			};
+		}
+
+		function play_video( video_obj ) {
+			if( !video_obj.vid ) {
+				console.log( "Missing YouTube video ID" );
+				return false;
+			}
+			if( !video_obj.start_time_s ) {
+				video_obj.start_time_s = 0;
+			}
+			if( !video_obj.duration ) {
+				video_obj.duration = 30;
+			}
+			var iframe_html = '<iframe id="yt_video_iframe" width="560" height="315" src="https://www.youtube.com/embed/' + video_obj.vid + '?enablejsapi=1&start=' + video_obj.start_time_s + '&end=' + ( video_obj.start_time_s + video_obj.duration ) + '&autoplay=1" frameborder="0" allowfullscreen></iframe>';
+
+			$( "#yt-vid" ).html( iframe_html );
+			player = new YT.Player( 'yt_video_iframe', {
+				events: {
+					'onStateChange': yt_player_state_change
+				}
+			} );
+		}
+
+		function yt_player_state_change( event ) {
+			if( event.data == 0 || event.data == 2 ) { // video ended/paused
+				$( "#yt_video_iframe" ).remove();
+				$( "#money-gif" ).removeClass( 'hide' );
+				$( "#money-gif" ).attr( 'src', '/images/money-gifs/' + money_gifs[ Math.floor( Math.random() * money_gifs.length ) ] );
+			}
+		}
+
+		function clean_last_deal() {
+			$( "#yt_video_iframe" ).remove();
+			$( "#yt_vid" ).html( '' );
+			$( '#money-gif' ).addClass( 'hide' );
+		}
+	</script>
+</html>

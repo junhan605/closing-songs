@@ -1,0 +1,25 @@
+{
+  "name": "closing-songs",
+  "version": "1.0.0",
+  "description": "plays a song after a webhook trigger",
+  "author": "David Liao <david@datanyze.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Datanyze/closing-songs"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "~1.4.3",
+    "dotenv": "^2.0.0",
+    "ejs": "~2.5.2",
+    "express": "~4.14.0",
+    "helmet": "^3.1.0",
+    "request": "^2.78.0",
+    "serve-favicon": "^2.3.0",
+    "socket.io-client": "^1.5.1"
+  }
+}
